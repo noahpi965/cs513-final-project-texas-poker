@@ -19,8 +19,8 @@ pip install pandas numpy scikit-learn scipy statsmodels matplotlib python-pptx p
 sh src/00_download.sh          # ~820 MB of raw hand histories
 cd src
 python 01_parse.py && python 02_features.py && python 03_eda_cluster.py
-python 04_style_effects.py && python 05_models.py && python 06_build_deck.py
+python 04_style_effects.py && python 05_models.py && python 06_build_deck.py && python 07_build_deck_zh.py
 ```
-Slides: `Texas_Holdem_Final_Presentation.pptx` · figures in `figures/` · result tables in `results/`.
+Slides: `Texas_Holdem_Final_Presentation.pptx` (English) · `Texas_Holdem_Final_Presentation_ZH.pptx` (中文版) · figures in `figures/` · result tables in `results/`.
 
 Caveats: hole cards are hidden (behaviour only), observational data, results before rake, 2009 NL50 only.

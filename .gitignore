@@ -1,0 +1,5 @@
+data/raw/
+data/player_hands.pkl
+needs.md
+__pycache__/
+.DS_Store

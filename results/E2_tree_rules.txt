@@ -1,0 +1,22 @@
+|--- open_size <= 0.85
+|   |--- line_3bet <= 0.50
+|   |   |--- seat_SB <= 0.50
+|   |   |   |--- weights: [9202.00, 4720.00] class: 0
+|   |   |--- seat_SB >  0.50
+|   |   |   |--- weights: [4360.00, 1942.00] class: 0
+|   |--- line_3bet >  0.50
+|   |   |--- log_stack <= 3.41
+|   |   |   |--- weights: [255.00, 620.00] class: 1
+|   |   |--- log_stack >  3.41
+|   |   |   |--- weights: [758.00, 2665.00] class: 1
+|--- open_size >  0.85
+|   |--- seat_SB <= 0.50
+|   |   |--- n_players <= 6.50
+|   |   |   |--- weights: [6483.00, 13819.00] class: 1
+|   |   |--- n_players >  6.50
+|   |   |   |--- weights: [2721.00, 7793.00] class: 1
+|   |--- seat_SB >  0.50
+|   |   |--- log_stack <= 3.41
+|   |   |   |--- weights: [119.00, 683.00] class: 1
+|   |   |--- log_stack >  3.41
+|   |   |   |--- weights: [821.00, 3039.00] class: 1

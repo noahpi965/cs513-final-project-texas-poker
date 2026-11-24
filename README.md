@@ -1,7 +1,11 @@
 # What wins at Texas Hold'em? — CS 513 final project
 
-Data mining 1.2M real online no-limit hold'em hands (PokerStars NL50, July 2009; PHH HandHQ archive,
-[uoftcprg/phh-dataset](https://github.com/uoftcprg/phh-dataset)) to find which style and decisions earn money.
+Data mining 616,317 real online ring-game hands (3-9 players; 4.0M player-hand records, 32,886 players) from PokerStars NL50, July 2009,
+to find which style and decisions earn money.
+
+**Data:** PHH HandHQ archive, [uoftcprg/phh-dataset](https://github.com/uoftcprg/phh-dataset) (subset `data/handhq/PS-2009-07-01_2009-07-23_50NLH_OBFU`);
+full archive: [doi.org/10.5281/zenodo.10796885](https://doi.org/10.5281/zenodo.10796885); format: [phh.readthedocs.io](https://phh.readthedocs.io/en/stable/).
+Funnel: 1,231 files → 1,230,387 hands parsed → 616,317 ring hands (heads-up excluded) → 1,498 players with ≥100 hands in both periods for the player-level tests.
 
 ## Key findings
 - Luck dominates: a player's result in days 1-10 barely predicts days 11-20 (r ≈ 0.02).

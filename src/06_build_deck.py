@@ -67,7 +67,7 @@ clu = pd.read_csv(f"{RES}/cluster_profit.csv")
 s = prs.slides.add_slide(BLANK)
 bg = s.shapes.add_shape(MSO_SHAPE.RECTANGLE, 0, 0, prs.slide_width, prs.slide_height); bg.fill.solid(); bg.fill.fore_color.rgb = DARK; bg.line.fill.background()
 tb(s, .8, 1.4, 11, 1.4, "What Wins at Texas Hold'em?", 48, True, RGBColor(255, 255, 255))
-tb(s, .8, 2.7, 11, 1.2, "Data mining 1.2 million real online no-limit hold'em hands to find the style and plays that make money", 22, False, RGBColor(0xC9, 0xD3, 0xE0))
+tb(s, .8, 2.7, 11, 1.2, "Data mining 616,000 real online no-limit hold'em hands (3-9 players) to find the style and plays that make money", 22, False, RGBColor(0xC9, 0xD3, 0xE0))
 ph = s.shapes.add_shape(MSO_SHAPE.RECTANGLE, Inches(.8), Inches(4.5), Inches(2.3), Inches(2.3)); ph.fill.background(); ph.line.color.rgb = RGBColor(255, 255, 255); ph.line.dash_style = 4
 tb(s, .8, 5.3, 2.3, .8, "[ insert photo ]", 14, False, RGBColor(0xC9, 0xD3, 0xE0), PP_ALIGN.CENTER)
 tb(s, 3.4, 4.7, 8, 1.5, ["[Your name]   ·   CS 513 Final Project", "Data: PHH HandHQ archive (PokerStars NL50, July 2009)", "Methods: clustering · WLS · kNN · Naive Bayes · CART/C5.0 · Random Forest · ANN · Gradient Boosting"], 16, False, RGBColor(0xC9, 0xD3, 0xE0))
@@ -80,19 +80,22 @@ bullets(s, .6, 1.4, 7.4, 5, [
     "What is new here|  Real hand histories (not the UCI Poker-Hand toy set), player identity tracked across 20 days, results rebuilt chip-by-chip.",
     "Our angle|  Test style on FUTURE results (days 1-10 -> days 11-20), then drill down to individual decisions where we have millions of observations.",
 ], 19)
-callout(s, 8.6, 1.5, 4.1, 1.5, "1,230,387", "hands replayed (PokerStars NL50)"); callout(s, 8.6, 3.2, 4.1, 1.5, "39,166", "distinct anonymised players", GREEN); callout(s, 8.6, 4.9, 4.1, 1.5, "5.2 M", "player-hand records with 30+ features", RED)
+callout(s, 8.6, 1.5, 4.1, 1.5, "616,317", "ring-game hands analysed (PokerStars NL50)"); callout(s, 8.6, 3.2, 4.1, 1.5, "32,886", "distinct anonymised players", GREEN); callout(s, 8.6, 4.9, 4.1, 1.5, "4.0 M", "player-hand records with 30+ features", RED)
 
 # 3 data
 s = slide("Data engineering: rebuilding every pot from the action log", "Stress that hole cards are hidden - everything is behavioural. Mention the evaluator for showdowns and the sanity check.")
-bullets(s, .6, 1.4, 6.6, 5.4, [
+bullets(s, .6, 1.3, 6.6, 5.4, [
     "Source|  uoftcprg/phh-dataset - HandHQ logs, anonymised but consistent player IDs.",
     "Replay engine|  parse each hand (TOML), track street bets, all-ins, uncalled-bet refunds, side pots.",
-    "Hidden cards|  Hole cards shown only at showdown. Where payouts were stripped (18% of hands) we settle with our own 7-card evaluator.",
+    "Hidden cards|  Hole cards shown only at showdown. Where payouts were stripped (20% of analysed hands, 122k) we settle with our own 7-card evaluator.",
     "Per-hand features|  VPIP, PFR, 3-bet, steal, c-bet, fold-to-c-bet, aggression, WTSD, bet sizes, seat, stack.",
-    "Scope|  3-9 player tables only; results in big blinds, before rake.",
-], 17)
+    "Funnel|  1,231 files → 1,230,387 hands parsed → 616,317 ring hands (3-9 players; heads-up dropped) → 32,886 players.",
+    "Units|  results in big blinds, before rake.",
+], 16)
 image(s, "f1_position_ev.png", 7.4, 1.5, 5.6, 4.3)
-tb(s, 7.4, 5.9, 5.6, 1, "Validation: the rebuilt results reproduce poker theory - button wins, blinds lose, and net results sum to zero.", 14, False, GREY)
+tb(s, 7.4, 5.7, 5.6, 1, "Validation: the rebuilt results reproduce poker theory - button wins, blinds lose, and net results sum to zero.", 14, False, GREY)
+
+tb(s, .6, 6.85, 12.3, .5, "Source: github.com/uoftcprg/phh-dataset  >  data/handhq/PS-2009-07-01_2009-07-23_50NLH_OBFU   |   full archive: doi.org/10.5281/zenodo.10796885", 11, False, GREY)
 
 # 4 noise
 s = slide("Luck swamps skill - so the design has to be careful", "This is the key methodological slide. Individual results do not persist.")
@@ -102,7 +105,7 @@ bullets(s, 9.0, 1.5, 4.1, 5, [
     f"Luck SD ≈ {noise['luck_sd']:.0f} bb/100|  vs. skill SD ≈ {noise['skill_sd']:.0f}",
     "Consequence|  predicting individual winners will be near-impossible; use pooled tests and hand-level data.",
 ], 16)
-tb(s, .6, 5.7, 8, 1, "Design: style features from days 1-10  →  outcome (bb/100) from days 11-20.  1,498 players with ≥100 hands in each period.", 15, False, GREY)
+tb(s, .6, 5.7, 8, 1, "Design: style features from days 1-10  →  outcome (bb/100) from days 11-20.  1,498 players with ≥100 hands in each period (853k + 880k player-hands).", 15, False, GREY)
 
 # 5 clustering
 s = slide("Unsupervised: four player archetypes, but profit gaps are not conclusive", "k-means with silhouette-chosen k, Ward as cross-check; be honest: p=0.12.")
@@ -182,7 +185,7 @@ s = slide("Limitations and honest caveats", "Credibility slide - pre-empt the ob
 bullets(s, .6, 1.4, 12.2, 5.3, [
     "Hole cards are hidden|  we measure behaviour, not hand strength: strong hands raise, so line EVs mix 'good play' with 'good cards'. The within-player comparison reduces, not removes, this.",
     "Observational data|  associations, not causal effects; profit also depends on opponents at the table.",
-    "Survivorship|  players with ≥100 hands in both periods are mostly regulars (mean +6.5 bb/100 vs the weaker players who vanish).",
+    "Survivorship|  players with ≥100 hands in both periods are mostly regulars (average +8.0 bb/100, since weaker players who quit early are excluded).",
     "Pre-rake results|  real rake would shift everyone down; 2009 NL50 only.",
     "Clustering is fragile|  significance flips with feature choice; we report the pre-specified design and p = 0.12.",
 ], 18)
@@ -198,6 +201,16 @@ bullets(s, .8, 4.3, 12, 2.5, [
 ], 16)
 
 # ------------------------------------------------------------------ appendix: code
+s = slide("Appendix: data source and references")
+bullets(s, .6, 1.4, 12.2, 5, [
+    "Dataset|  PHH dataset (poker hand histories), University of Toronto CPSRG. https://github.com/uoftcprg/phh-dataset",
+    "Subset used|  HandHQ logs, PokerStars NL50 ($0.25/$0.50), 1-23 July 2009: data/handhq/PS-2009-07-01_2009-07-23_50NLH_OBFU (files 1-1299; 1,231 downloaded).",
+    "Full archive|  https://doi.org/10.5281/zenodo.10796885 (includes content excluded from GitHub).",
+    "Format spec|  https://phh.readthedocs.io/en/stable/",
+    "Code & results|  https://github.com/noahpi965/cs513-final-project-texas-poker",
+    "Processing notes|  3-9 player tables only; pot rebuilt from actions; showdowns without payouts settled with a 7-card evaluator; results in big blinds before rake.",
+], 15)
+
 s = slide("Appendix: source code"); tb(s, .6, 1.5, 12, 3, ["01_parse.py - replay engine, hand evaluator, per-hand features", "02_features.py - player style table + train/test period split",
    "03_eda_cluster.py - EDA, k-means / Ward, permutation test", "04_style_effects.py - WLS, preflop line EV, within-player test",
    "05_models.py - kNN / NB / CART / C5.0 / RF / ANN / GBM comparison", "06_build_deck.py - this presentation"], 20)
